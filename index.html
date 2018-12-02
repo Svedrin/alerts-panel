@@ -8,10 +8,11 @@
     <style>
       html { height: 100%; width: 100%; }
       body {
-          width: 100%;
-          height: 100%;
-          margin: 0px;
-          padding: 0px;
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+        background-color: #1a1a1a;
       }
       div {
         overflow-x: hidden;
@@ -20,12 +21,6 @@
       table {
         /* whatever this does, it fixes FireFox's rowspan border rendering */
         border-collapse: separate !important;
-      }
-      .up {
-        color: #00aa00;
-      }
-      .down {
-        color: #dc0000;
       }
       #content {
         height: 100%;
@@ -37,15 +32,6 @@
       }
       img.has-errors {
         border: 2px solid red;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="content" class="container fullscreen" ng-controller="AlertsCtrl">
-      <!-- kate: space-indent on; indent-width 2; replace-tabs on; -->
-      <style>
-      body {
-        background-color: #1a1a1a;
       }
       div.background {
         overflow: auto;
@@ -134,7 +120,10 @@
       .zdisaster {
         background: #ff3838 none repeat scroll 0 0 !important;
       }
-      </style>
+    </style>
+  </head>
+  <body>
+    <div id="content" class="container fullscreen" ng-controller="AlertsCtrl">
       <div class="background">
         <table class="table alertstable">
           <thead>
@@ -142,12 +131,7 @@
               <th class="alerttitle" >Alerts</td>
               <th ng-repeat="host in hosts|orderedKeys" style="padding: 0;">
                 <div style="width: 20px; height: 250px;">
-      <!--             <div class="hostname">{{ hosts[host].yaktag }} {{ host }}</div> -->
-                  <div class="hostname">
-                    <span ng-show="hosts[host].yaktag" ng-bind="hosts[host].yaktag"></span>
-                    <span ng-show="!hosts[host].yaktag &amp;&amp; hosts[host].proemion_app">[{{hosts[host].proemion_app.PCONSOLE_STACK}}:{{hosts[host].proemion_app.PCONSOLE_ENV}}:{{hosts[host].proemion_app.PCONSOLE_APP}}]</span>
-                    {{ host }}
-                  </div>
+                  <div class="hostname" ng-bind="host"></div>
                 </div>
               </td>
             </tr>
@@ -165,10 +149,6 @@
                 zdisaster: alerts[summary][host] &amp;&amp; alerts[summary][host].severity == 'disaster'
               }"
               class="alertstate">
-                <i class="fa fa-minus-circle" ng-show="alerts[summary][host].disabled" title="disabled (silenced or inhibited)"></i>
-                <i class="fa fa-wrench"  ng-show="alerts[summary][host].in_maintenance" title="in Maintenance"></i>
-                <i class="fa fa-check"   ng-show="alerts[summary][host].acked"          title="acknowledged"></i>
-      <!--           <i class="fa fa-clock-o" ng-show="alerts[summary][host].age_seconds &lt; 300" title="firing since less than 5 minutes"></i> -->
               &nbsp;
             </td>
           </tr>
