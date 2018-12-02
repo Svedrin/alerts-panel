@@ -31,7 +31,6 @@ angular.module('AlertsApp', [])
 
     var query = function(){
         AlertsService.get_alerts().then(function(result){
-            console.log(result);
             var all_alerts = [];
 
             angular.forEach(result.data.data || [], function(group){
@@ -45,7 +44,6 @@ angular.module('AlertsApp', [])
                     });
                 });
             });
-            console.log(all_alerts);
 
             // Now, group those alertés by their summaraizia.
             var alerts_by_description = {};
@@ -58,7 +56,6 @@ angular.module('AlertsApp', [])
 
             $scope.prev_resp_alerts = $scope.resp_alerts;
             $scope.resp_alerts = alerts_by_description;
-            console.log(alerts_by_description);
 
             $scope.alerts    = {};
             $scope.hosts     = {};
