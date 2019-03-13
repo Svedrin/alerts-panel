@@ -12,7 +12,7 @@ angular.module('AlertsApp', [])
     return {
         get_alerts: function(query){
             return $http({
-                url: "/alert-manager/api/v1/alerts/groups",
+                url: "/alert-manager/api/v1/alerts",
                 params: {
                     c: new Date()
                 },
@@ -33,15 +33,11 @@ angular.module('AlertsApp', [])
         AlertsService.get_alerts().then(function(result){
             var all_alerts = [];
 
-            angular.forEach(result.data.data || [], function(group){
-                angular.forEach(group.blocks || [], function(block){
-                    angular.forEach(block.alerts || [], function(alert){
-                        all_alerts.push({
-                            hostname:   alert.labels.fqdn || alert.labels.instance,
-                            summary:    alert.annotations.summary,
-                            severity:   alert.labels.severity,
-                        });
-                    });
+            angular.forEach(result.data.data || [], function(alert){
+                all_alerts.push({
+                    hostname:   alert.labels.fqdn || alert.labels.instance,
+                    summary:    alert.annotations.summary,
+                    severity:   alert.labels.severity,
                 });
             });
 
