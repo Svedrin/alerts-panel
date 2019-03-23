@@ -34,10 +34,17 @@ angular.module('AlertsApp', [])
             var all_alerts = [];
 
             angular.forEach(result.data.data || [], function(alert){
+                var sev = alert.labels.severity;
+                if(typeof alert.endsAt !== "undefined" &&
+                   !alert.endsAt.startsWith("0001-01-01") && // -.-
+                   new Date(alert.endsAt) < new Date()){
+                    // Alert has already ended, A-M just informs us there _used to be_ one
+                    sev = "normal";
+                }
                 all_alerts.push({
-                    hostname:   alert.labels.fqdn || alert.labels.instance,
+                    hostname:   ['[', alert.labels.instance, ':', alert.labels.service, ']'].join(''),
                     summary:    alert.annotations.summary,
-                    severity:   alert.labels.severity,
+                    severity:   sev,
                 });
             });
 
