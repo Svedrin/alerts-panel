@@ -5,6 +5,5 @@ steps:
 - name: build docker image
   image: plugins/docker
   settings:
-    repo: 192.168.44.254:5000/alerts-panel
-    insecure: true
+    repo: docker.funzt-halt.net/alerts-panel
     tags: latest
