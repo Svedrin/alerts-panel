@@ -6,4 +6,5 @@ steps:
   image: plugins/docker
   settings:
     repo: 192.168.44.254:5000/alerts-panel
+    insecure: true
     tags: latest
