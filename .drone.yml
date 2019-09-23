@@ -7,3 +7,4 @@ steps:
   settings:
     repo: docker.funzt-halt.net/alerts-panel
     tags: latest
+    cache_from: "docker.funzt-halt.net/alerts-panel:latest"
