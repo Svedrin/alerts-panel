@@ -1,3 +1,4 @@
+---
 kind: pipeline
 name: default
 
@@ -7,3 +8,8 @@ steps:
   settings:
     repo: docker.funzt-halt.net/alerts-panel
     tags: latest
+---
+kind: signature
+hmac: 9fb7725a83151a0fccbfa4444252f8e5e48d66e751851cecbc9175e74683b91b
+
+...
