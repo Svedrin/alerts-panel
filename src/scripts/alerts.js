@@ -45,6 +45,7 @@ angular.module('AlertsApp', [])
                     hostname:   ['[', alert.labels.instance, ':', alert.labels.service, ']'].join(''),
                     summary:    alert.annotations.summary,
                     severity:   sev,
+                    status:     alert.status,
                 });
             });
 
