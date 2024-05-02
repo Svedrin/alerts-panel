@@ -149,7 +149,7 @@
                 zdisaster: alerts[summary][host] &amp;&amp; alerts[summary][host].severity == 'disaster'
               }"
               class="alertstate">
-              <span ng-show="alerts[summary][host].status.silencedBy !== null" title="acknowledged">✔️</span>
+              <span ng-show="alerts[summary][host] &amp;&amp; alerts[summary][host].status.silencedBy !== null" title="acknowledged">✔️</span>
               &nbsp;
             </td>
           </tr>
