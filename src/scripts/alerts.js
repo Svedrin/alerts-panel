@@ -80,6 +80,22 @@ window.app = {
         return Object.keys(this.alerts).length > 0;
     },
 
+    isAcked (alert) {
+        return (
+            Array.isArray(alert.status.silencedBy) &&
+            alert.status.silencedBy.length > 0
+        )
+    },
+
+    cssSeverity (alert) {
+        // If an alert is acked, treat severity as info
+        if (this.isAcked(alert)) {
+            return "zinfo";
+        } else {
+            return "z" + alert.severity;
+        }
+    },
+
     init () {
         this.hosts  = [];
         this.alerts = {};
