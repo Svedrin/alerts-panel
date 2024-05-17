@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html ng-app="AlertsApp">
+<html>
   <head>
     <title>Alerts</title>
     <meta charset="UTF-8" />
-    <script type="text/javascript" src="angular/angular.min.js"></script>
+    <script type="text/javascript" src="alpinejs/dist/cdn.min.js" defer></script>
     <script type="text/javascript" src="scripts/alerts.js"></script>
     <style>
       html { height: 100%; width: 100%; }
@@ -65,10 +65,10 @@
         padding: 1px 3px !important;
         font-size: 9pt;
       }
-      table.alertstable tr.oddrow > td {
+      table.alertstable tr:nth-child(odd) > td {
         background-color: rgba(255, 255, 255, 0.1);
       }
-      table.alertstable tr.evenrow > td {
+      table.alertstable tr:nth-child(even) > td {
         background-color: rgba(255, 255, 255, 0.03);
       }
       table.alertstable tbody tr:hover {
@@ -123,38 +123,37 @@
     </style>
   </head>
   <body>
-    <div id="content" class="container fullscreen" ng-controller="AlertsCtrl">
+    <div id="content" class="container fullscreen" x-data="window.app">
       <div class="background">
-        <table class="table alertstable">
+        <table x-show="haveAlerts" class="table alertstable">
           <thead>
             <tr class="evenrow">
-              <th class="alerttitle" >Alerts</th>
-              <th ng-repeat="host in hosts|orderedKeys" style="padding: 0;">
-                <div style="width: 20px; height: 250px;">
-                  <div class="hostname" ng-bind="host"></div>
-                </div>
-              </th>
+              <th class="alerttitle">Alerts</th>
+              <template x-for="host in orderedKeys(hosts)">
+                <th style="padding: 0;">
+                  <div style="width: 20px; height: 250px;">
+                    <div class="hostname" x-text="host"></div>
+                  </div>
+                </th>
+              </template>
             </tr>
           </thead>
-          <tr ng-repeat="summary in alerts|orderedKeys" ng-class-even="'evenrow'" ng-class-odd="'oddrow'">
-            <td class="alerttitle">{{ summary }}</td>
-            <td
-              ng-repeat="host in hosts|orderedKeys"
-              ng-class="{
-                zinfo:     alerts[summary][host] &amp;&amp; alerts[summary][host].severity == 'info'     ,
-                znormal:   alerts[summary][host] &amp;&amp; alerts[summary][host].severity == 'normal'   ,
-                zwarning:  alerts[summary][host] &amp;&amp; alerts[summary][host].severity == 'warning'  ,
-                zaverage:  alerts[summary][host] &amp;&amp; alerts[summary][host].severity == 'average'  ,
-                zhigh:     alerts[summary][host] &amp;&amp; alerts[summary][host].severity == 'high'     ,
-                zdisaster: alerts[summary][host] &amp;&amp; alerts[summary][host].severity == 'disaster'
-              }"
-              class="alertstate">
-              <span ng-show="alerts[summary][host] &amp;&amp; alerts[summary][host].status.silencedBy !== null" title="acknowledged">✔️</span>
-              &nbsp;
-            </td>
-          </tr>
+          <template x-for="summary in orderedKeys(alerts)">
+            <tr>
+              <td class="alerttitle" x-text="summary"></td>
+              <template x-for="host in orderedKeys(hosts)">
+                <td
+                  x-bind:class="alerts[summary][host] ? 'z' + alerts[summary][host].severity : ''"
+                  class="alertstate"
+                >
+                  <span x-show="alerts[summary][host] &amp;&amp; alerts[summary][host].status.silencedBy !== null" title="acknowledged">✔️</span>
+                  &nbsp;
+                </td>
+              </template>
+            </tr>
+          </template>
         </table>
-        <div ng-show="noAlerts">
+        <div x-show="!haveAlerts">
           <center>
             <a href="https://www.youtube.com/watch?v=Y6ljFaKRTrI&amp;t=7s" target="_blank"
               title="there's no sense crying over every mistake, you just keep on trying till you run out of cake">
