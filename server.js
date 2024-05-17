@@ -52,7 +52,7 @@ app.get('/alert-manager/api/v1/alerts', function (req, res) {
       "labels": {
         "instance": "otherhost",
         "service": "os",
-        "severity": "warning",
+        "severity": "average",
       },
       "annotations": {
         "description": "otherhost: Systemd unit some.service has been in state \"failed\" for 15 minutes.",
@@ -99,6 +99,23 @@ app.get('/alert-manager/api/v1/alerts', function (req, res) {
         "silencedBy": ["some-fake-uuid"],
         "inhibitedBy": []
       }
+    }, {
+      "labels": {
+        "instance": "otherhost",
+        "service": "nexuiz",
+        "severity": "disaster",
+      },
+      "annotations": {
+        "description": "otherhost: The nexuiz server has been unreachable for 1 hour.",
+        "summary": "Our nexuiz server is down, no gaming possible"
+      },
+      "startsAt": new Date( (new Date()).getTime() - 60000 ).toISOString(), // A minute ago
+      "endsAt":   new Date( (new Date()).getTime() + 60000 ).toISOString(), // A minute from now
+      "status": {
+        "state": "active",
+        "silencedBy": [],
+        "inhibitedBy": []
+      }
     } ]
   };
   if ((new Date()).getMinutes() % 5 == 0) {
@@ -107,7 +124,7 @@ app.get('/alert-manager/api/v1/alerts', function (req, res) {
       "labels": {
         "instance": "thirdhost",
         "service": "time",
-        "severity": "average",
+        "severity": "info",
       },
       "annotations": {
         "description": "thirdhost: The current minute is divisible by five.",
