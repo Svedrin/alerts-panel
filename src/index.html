@@ -138,21 +138,23 @@
               </template>
             </tr>
           </thead>
-          <template x-for="summary in orderedKeys(alerts)">
-            <tr>
-              <td x-text="alertService(summary)"></td>
-              <td class="alerttitle" x-text="alertSummary(summary)"></td>
-              <template x-for="host in orderedKeys(hosts)">
-                <td
-                  x-bind:class="alerts[summary][host] ? cssSeverity(alerts[summary][host]) : ''"
-                  class="alertstate"
-                >
-                  <span x-show="alerts[summary][host] &amp;&amp; isAcked(alerts[summary][host])" title="acknowledged">✔️</span>
-                  &nbsp;
-                </td>
-              </template>
-            </tr>
-          </template>
+          <tbody>
+            <template x-for="summary in orderedKeys(alerts)">
+              <tr>
+                <td x-text="alertService(summary)"></td>
+                <td class="alerttitle" x-text="alertSummary(summary)"></td>
+                <template x-for="host in orderedKeys(hosts)">
+                  <td
+                    x-bind:class="alerts[summary][host] ? cssSeverity(alerts[summary][host]) : ''"
+                    class="alertstate"
+                  >
+                    <span x-show="alerts[summary][host] &amp;&amp; isAcked(alerts[summary][host])" title="acknowledged">✔️</span>
+                    &nbsp;
+                  </td>
+                </template>
+              </tr>
+            </template>
+          </tbody>
         </table>
         <div x-show="!haveAlerts">
           <center>
