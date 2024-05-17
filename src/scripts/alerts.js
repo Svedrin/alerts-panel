@@ -109,7 +109,7 @@ window.app = {
         this.alerts = {};
         this.last_alerts = {};
 
-        setInterval( async() => await this.query(), 60000);
+        setInterval( async() => await this.query(), 30000);
         setTimeout(  async() => await this.query(), 10);
     }
 
