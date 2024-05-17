@@ -128,7 +128,7 @@
         <table x-show="haveAlerts" class="table alertstable">
           <thead>
             <tr class="evenrow">
-              <th class="alerttitle">Alerts</th>
+              <th class="alerttitle" colspan="2">Alerts</th>
               <template x-for="host in orderedKeys(hosts)">
                 <th style="padding: 0;">
                   <div style="width: 20px; height: 250px;">
@@ -140,7 +140,8 @@
           </thead>
           <template x-for="summary in orderedKeys(alerts)">
             <tr>
-              <td class="alerttitle" x-text="summary"></td>
+              <td x-text="alertService(summary)"></td>
+              <td class="alerttitle" x-text="alertSummary(summary)"></td>
               <template x-for="host in orderedKeys(hosts)">
                 <td
                   x-bind:class="alerts[summary][host] ? cssSeverity(alerts[summary][host]) : ''"

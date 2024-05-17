@@ -29,8 +29,8 @@ window.app = {
                 sev = "normal";
             }
             all_alerts.push({
-                hostname:   `[${alert.labels.instance}:${alert.labels.service}]`,
-                summary:    alert.annotations.summary,
+                hostname:   `${alert.labels.instance}`,
+                summary:    `${alert.labels.service} :: ${alert.annotations.summary}`,
                 severity:   sev,
                 status:     alert.status,
             });
@@ -94,6 +94,14 @@ window.app = {
         } else {
             return "z" + alert.severity;
         }
+    },
+
+    alertService (summary) {
+        return summary.split(" :: ", 2)[0];
+    },
+
+    alertSummary (summary) {
+        return summary.split(" :: ", 2)[1];
     },
 
     init () {
