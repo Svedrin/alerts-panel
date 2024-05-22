@@ -35,7 +35,7 @@ app.get('/alert-manager/api/v1/alerts', function (req, res) {
       "labels": {
         "instance": "onehost",
         "service": "os",
-        "severity": "average",
+        "severity": "error",
       },
       "annotations": {
         "description": "onehost: Systemd unit other.service has been in state \"failed\" for 15 minutes.",
@@ -52,7 +52,7 @@ app.get('/alert-manager/api/v1/alerts', function (req, res) {
       "labels": {
         "instance": "otherhost",
         "service": "os",
-        "severity": "average",
+        "severity": "error",
       },
       "annotations": {
         "description": "otherhost: Systemd unit some.service has been in state \"failed\" for 15 minutes.",
