@@ -48,32 +48,37 @@ window.app = {
         this.prev_resp_alerts = this.resp_alerts;
         this.resp_alerts = alerts_by_description;
 
-        this.alerts    = {};
-        this.hosts     = {};
+        // Build new arrays from our data and then replace them in
+        // one go. If we don't, the UI will try to render inconsistent
+        // states and throw errors all over the place.
+        var new_alerts    = {};
+        var new_hosts     = {};
         for (const summary in this.resp_alerts) {
-            this.alerts[summary] = {};
+            new_alerts[summary] = {};
             for (const alert of this.resp_alerts[summary]) {
-                this.alerts[summary][alert.hostname] = alert;
-                this.hosts[alert.hostname] = alert.host;
+                new_alerts[summary][alert.hostname] = alert;
+                new_hosts[alert.hostname] = alert.host;
             }
         }
         for (const summary in this.prev_resp_alerts) {
             // Check if alerts from last_alerts are still there, and if not,
             // add a {"severity": "normal"} dummy alert to indicate they were fixed
-            if( typeof this.alerts[summary] == "undefined" ){
-                this.alerts[summary] = {};
+            if( typeof new_alerts[summary] == "undefined" ){
+                new_alerts[summary] = {};
             }
             for (const alert of this.prev_resp_alerts[summary]) {
-                if( typeof this.alerts[summary][alert.hostname] == "undefined" ){
+                if( typeof new_alerts[summary][alert.hostname] == "undefined" ){
                     // Alert is gone! Fixed! Woohoo!
                     alert.severity = "normal";
-                    this.alerts[summary][alert.hostname] = alert;
-                    if( typeof this.hosts[alert.hostname] == "undefined" ){
-                        this.hosts[alert.hostname] = alert.host;
+                    new_alerts[summary][alert.hostname] = alert;
+                    if( typeof new_hosts[alert.hostname] == "undefined" ){
+                        new_hosts[alert.hostname] = alert.host;
                     }
                 }
             }
         }
+        this.alerts = new_alerts;
+        this.hosts  = new_hosts;
     },
 
     get haveAlerts () {
