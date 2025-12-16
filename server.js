@@ -11,10 +11,8 @@ app.use(express.static('src'))
 app.use(express.static('node_modules'))
 
 // Dummy endpoint used for testing -- shadow this in your reverse proxy
-app.get('/alert-manager/api/v1/alerts', function (req, res) {
-  var data = {
-    "status": "success",
-    "data": [ {
+app.get('/alert-manager/api/v2/alerts', function (req, res) {
+  var data = [ {
       "labels": {
         "instance": "onehost",
         "service": "os",
@@ -116,8 +114,7 @@ app.get('/alert-manager/api/v1/alerts', function (req, res) {
         "silencedBy": [],
         "inhibitedBy": []
       }
-    } ]
-  };
+    } ];
   if ((new Date()).getMinutes() % 5 == 0) {
     // Every 5 minutes, include another alert to see if the "alert fixed" detection works
     data.data.push({

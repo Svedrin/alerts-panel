@@ -7,7 +7,7 @@ window.app = {
 
     async query () {
         const response = await fetch(
-            "/alert-manager/api/v1/alerts?c=" + (new Date()).getTime(),
+            "/alert-manager/api/v2/alerts?c=" + (new Date()).getTime(),
             {
                 headers: {
                     "X-Requested-With": "XMLHttpRequest"
@@ -18,7 +18,7 @@ window.app = {
 
         var all_alerts = [];
 
-        for (const alert of result.data || []){
+        for (const alert of result || []){
             var sev = alert.labels.severity;
             if (
                 typeof alert.endsAt !== "undefined" &&
